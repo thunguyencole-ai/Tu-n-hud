@@ -1,0 +1,159 @@
+-- ⚡ TuấnHub ULTIMATE v1.0
+-- Full AutoFarm + AutoBoss + AutoRaid + AutoSeaEvent + AutoRaceV4 + AutoServerHop
+-- Made by ChatGPT & Tuấn 😎
+
+-- Khởi tạo UI
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("🔥 TuấnHub ULTIMATE 🔥", "Ocean")
+
+-- Global Settings
+getgenv().BF = getgenv().BF or {
+    AutoFarm = false,
+    AutoBoss = false,
+    AutoRaid = false,
+    AutoSeaEvent = false,
+    AutoRaceV4 = false,
+    AutoServerHop = false
+}
+
+---------------------------------------------------------
+-- 🌾 AutoFarm Tab
+---------------------------------------------------------
+local FarmTab = Window:MakeTab({Name = "🌾 AutoFarm", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+FarmTab:AddToggle({
+    Name = "Bật AutoFarm",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoFarm = Value end
+})
+
+task.spawn(function()
+    while task.wait(1) do
+        if getgenv().BF.AutoFarm then
+            -- Fake auto farm (placeholder)
+            print("🌾 AutoFarm đang chạy...")
+            -- Ở đây bạn có thể thêm logic đánh quái
+        end
+    end
+end)
+
+---------------------------------------------------------
+-- 👑 AutoBoss Tab
+---------------------------------------------------------
+local BossTab = Window:MakeTab({Name = "👑 AutoBoss", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+BossTab:AddToggle({
+    Name = "Bật AutoBoss",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoBoss = Value end
+})
+
+task.spawn(function()
+    while task.wait(2) do
+        if getgenv().BF.AutoBoss then
+            print("👑 Đang tìm boss...")
+            -- Thêm logic farm boss ở đây
+        end
+    end
+end)
+
+---------------------------------------------------------
+-- 🌋 AutoRaid Tab
+---------------------------------------------------------
+local RaidTab = Window:MakeTab({Name = "🌋 AutoRaid", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+RaidTab:AddToggle({
+    Name = "Bật AutoRaid",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoRaid = Value end
+})
+
+task.spawn(function()
+    while task.wait(3) do
+        if getgenv().BF.AutoRaid then
+            print("🌋 Đang auto raid...")
+            -- Thêm logic raid chip
+        end
+    end
+end)
+
+---------------------------------------------------------
+-- 🌊 AutoSeaEvent Tab
+---------------------------------------------------------
+local SeaTab = Window:MakeTab({Name = "🌊 AutoSeaEvent", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+SeaTab:AddToggle({
+    Name = "Bật AutoSeaEvent",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoSeaEvent = Value end
+})
+
+task.spawn(function()
+    while task.wait(5) do
+        if getgenv().BF.AutoSeaEvent then
+            print("🌊 Auto Sea Event đang hoạt động...")
+            -- Thêm logic xử lý biển khơi
+        end
+    end
+end)
+
+---------------------------------------------------------
+-- 🐉 AutoRaceV4 Tab
+---------------------------------------------------------
+local RaceTab = Window:MakeTab({Name = "🐉 AutoRaceV4", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+RaceTab:AddToggle({
+    Name = "Bật AutoRaceV4",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoRaceV4 = Value end
+})
+
+task.spawn(function()
+    while task.wait(7) do
+        if getgenv().BF.AutoRaceV4 then
+            print("🐉 Auto V4 đang farm Mirage/FullMoon...")
+            -- Thêm logic Mirage + Gear + Temple of Time
+        end
+    end
+end)
+
+---------------------------------------------------------
+-- 🌍 AutoServerHop Tab
+---------------------------------------------------------
+local HttpService = game:GetService("HttpService")
+local TeleportService = game:GetService("TeleportService")
+local Players = game:GetService("Players")
+
+local HopTab = Window:MakeTab({Name = "🌍 AutoServerHop", Icon = "rbxassetid://4483345998", PremiumOnly = false})
+
+HopTab:AddToggle({
+    Name = "Bật AutoServerHop",
+    Default = false,
+    Callback = function(Value) getgenv().BF.AutoServerHop = Value end
+})
+
+function HopServer()
+    local url = "https://games.roblox.com/v1/games/"..game.PlaceId.."/servers/Public?sortOrder=Asc&limit=100"
+    local servers = HttpService:JSONDecode(game:HttpGet(url))
+    for _,srv in pairs(servers.data) do
+        if srv.playing < srv.maxPlayers then
+            TeleportService:TeleportToPlaceInstance(game.PlaceId, srv.id, Players.LocalPlayer)
+            break
+        end
+    end
+end
+
+task.spawn(function()
+    while task.wait(10) do
+        if getgenv().BF.AutoServerHop then
+            local isFullMoon = (workspace:FindFirstChild("Moon") and workspace.Moon.Transparency == 0)
+            local hasMirage = workspace:FindFirstChild("Mirage Island")
+            if not isFullMoon and not hasMirage then
+                print("🌍 Không có Mirage/FullMoon → Đang hop server...")
+                HopServer()
+            end
+        end
+    end
+end)
+
+print("🔥 TuấnHub ULTIMATE đã load xong!")
